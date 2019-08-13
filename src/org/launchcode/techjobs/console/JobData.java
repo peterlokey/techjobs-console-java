@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -71,9 +72,13 @@ public class JobData {
         loadData();
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-
+        int i=0;
         for (HashMap<String, String> row : allJobs) {
+            i +=1;
+           /* System.out.println(i);
+            System.out.println(row);
 
+            */
             String aValue = row.get(column);
 
             if (aValue.contains(value)) {
@@ -81,6 +86,29 @@ public class JobData {
             }
         }
 
+        return jobs;
+    }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String searchValue) {
+        // load data, if not already loaded
+        loadData();
+
+    //TODO: findByValue works but prints duplicate listings if search term is found in listing twice.
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        int numJobs = 0;
+
+        for (HashMap<String, String> listing : allJobs){
+            for(HashMap.Entry<String, String> row: listing.entrySet()) {
+                String aValue = row.getValue();
+                //System.out.println(row);
+                if (aValue.contains(searchValue)){
+                    jobs.add(listing);
+                    numJobs +=1;
+                }
+            }
+        }
+        System.out.println(numJobs);
         return jobs;
     }
 
