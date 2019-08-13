@@ -93,8 +93,6 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-    //TODO: findByValue works but prints duplicate listings if search term is found in listing twice.
-
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
         int numJobs = 0;
 
@@ -102,13 +100,13 @@ public class JobData {
             for(HashMap.Entry<String, String> row: listing.entrySet()) {
                 String aValue = row.getValue();
                 //System.out.println(row);
-                if (aValue.contains(searchValue)){
-                    jobs.add(listing);
-                    numJobs +=1;
+                if (aValue.toLowerCase().contains(searchValue.toLowerCase())){
+                    if (!jobs.contains(listing)) {
+                        jobs.add(listing);
+                    }
                 }
             }
         }
-        System.out.println(numJobs);
         return jobs;
     }
 
